@@ -166,7 +166,7 @@ def trainer_yolo(args, yolo_cfg, model, snapshot_path, multimask_output, low_res
 
             running_lr += lr_
 
-            logging.info('iteration %d, loss: %f, loss_ce: %f, loss_dice: %f, lr: %f' % (iter_num, loss.item(), loss_ce.item(), loss_dice.item(), lr_))
+            logging.info('epoch %d, iteration %d, loss: %f, loss_ce: %f, loss_dice: %f, lr: %f' % (epoch_num, iter_num, loss.item(), loss_ce.item(), loss_dice.item(), lr_))
 
             if iter_num % 20 == 0:
                 image = image_batch[1, 0:1, :, :]
