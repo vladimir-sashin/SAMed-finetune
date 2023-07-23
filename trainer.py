@@ -216,8 +216,8 @@ def trainer_yolo(args, yolo_cfg, model, snapshot_path, multimask_output, low_res
         writer.add_scalar('val_epoch/loss_ce', val_epoch_loss_ce, epoch_num)
         writer.add_scalar('val_epoch/loss_dice', val_epoch_loss_dice, epoch_num)
 
-        if val_epoch_loss_ce < best_val_loss:
-            best_val_loss = val_epoch_loss_ce
+        if val_epoch_loss < best_val_loss:
+            best_val_loss = val_epoch_loss
             best_val_epoch = epoch_num
 
             save_mode_path = save_model(model, snapshot_path, "best")
