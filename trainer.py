@@ -201,8 +201,7 @@ def trainer_yolo(args, yolo_cfg, model, snapshot_path, multimask_output, low_res
         val_loss_dice = 0.0
         with torch.no_grad():
             for val_batch in test_loader:
-                image_batch, low_res_label_batch = val_batch['img'], val_batch['masks']  # [b, c, h, w], [b, h, w]
-                image_batch.to(DEVICE), low_res_label_batch.to(DEVICE)
+                image_batch, low_res_label_batch = val_batch['img'].to(DEVICE), val_batch['masks'].to(DEVICE)  # [b, c, h, w], [b, h, w]
                 outputs = model(image_batch, multimask_output, args.img_size)
                 loss, loss_ce, loss_dice = calc_loss(outputs, low_res_label_batch, ce_loss, dice_loss, args.dice_param)
                 val_loss += loss.item() * batch_size
