@@ -166,14 +166,12 @@ def trainer_yolo(args, yolo_cfg, model, snapshot_path, multimask_output, low_res
 
             running_lr += lr_
 
-            logging.info('epoch %d, iteration %d, loss: %f, loss_ce: %f, loss_dice: %f, lr: %f' % (epoch_num, iter_num, loss.item(), loss_ce.item(), loss_dice.item(), lr_))
-
             if iter_num % 20 == 0:
-                image = image_batch[1, 0:1, :, :]
+                image = image_batch[1, :, :, :]
                 writer.add_image('train/Image', image, iter_num)
                 output_masks = outputs['masks']
                 output_masks = torch.argmax(torch.softmax(output_masks, dim=1), dim=1, keepdim=True)
-                writer.add_image('train/Prediction', output_masks[1, ...] * 50, iter_num)
+                writer.add_image('train/Prediction', output_masks[1, ...] * 50, iter_num)  # TODO: *50 -> * int(255 / num_classes)
                 labs = low_res_label_batch[1, ...].unsqueeze(0) * int(255 / num_classes)
                 writer.add_image('train/GroundTruth', labs, iter_num)
 
